@@ -37,12 +37,6 @@ export function jsonpath_hightlight(obj: any, query: string, prefix: string, sur
     return obj;
 }
 /**
- * 
- * var xpath = require('xpath'),
-    dom = require('xmldom').DOMParser
-    var document = new dom().parseFromString(xml)
- */
-/**
  * use xpath to search node and decorate the node by prefix and surfix
  * 
  * args:
