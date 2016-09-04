@@ -34,7 +34,7 @@ export class Decorator {
 
         let jsonPathHelper = new JsonPathHelper();
         let decorations: vscode.DecorationOptions[] = [];
-
+        
         let positions = jsonPathHelper.getMatchPositions(text, expression);
 
         for (let i = 0; i < positions.length; i++) {
