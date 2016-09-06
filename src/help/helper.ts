@@ -61,19 +61,34 @@ export function xpath_hightlight(obj: any, query: string, op: Function) {
         var thisNode = iterator.iterateNext();
 
         while (thisNode) {
-            thisNode.tagName = op(thisNode.tagName);
+            if(thisNode.nodeType === 1){
+                thisNode.tagName = op(thisNode.tagName);
+            }
+            if(thisNode.nodeType === 2){
+                thisNode.name = op(thisNode.name);
+            }
             thisNode = iterator.iterateNext();
         }
     } catch (e) {
     }
     return obj;
 }
-
+/**
+ * get the decoration via regex
+ * 
+ * args:
+ *      ...
+ * 
+ * return:
+ *      promise
+ */
 export function xpath_getDecorations(editor: TextEditor, xml: string, regex: RegExp, startminus: number, endminus: number, hoverMsg: string, decorations: DecorationOptions[], fn: Function) {
     
     return editor.edit((edit) => {
         var match;
+        
         while (match = regex.exec(xml)) {
+            
             var startPos_true = editor.document.positionAt(match.index);
             var endPos_true = editor.document.positionAt(match.index + match[0].length);
             var range_true = new Range(startPos_true, endPos_true);
@@ -82,17 +97,30 @@ export function xpath_getDecorations(editor: TextEditor, xml: string, regex: Reg
             var endPos = editor.document.positionAt(match.index + match[0].length - endminus);
             var range = new Range(startPos, endPos);
             var rmatch = fn(match[0]);
+            console.log(rmatch);
+            
             var decoration = { range: range, hoverMessage: hoverMsg };
 
             decorations.push(decoration);
             edit.replace(range_true, rmatch)
-            // xml = editor.document.getText()
+            xml = editor.document.getText()
             // console.log(xml);
         }
     })
 }
-
+/**
+ * format xml to pretty code
+ * 
+ * args:
+ *      xml: string
+ * 
+ * return
+ *      pretty-xml：string
+ */
 export function formatXml(xml) {
+    xml = xml.replace(/\n/g,"").replace(/>\s+</g,"><");
+    console.log("formatxml :      "+xml);
+    
     var reg = /(>)(<)(\/*)/g;
     var wsexp = / *(.*) +\n/g;
     var contexp = /(<.+>)(.+\n)/g;
