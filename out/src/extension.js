@@ -9,7 +9,7 @@ function activate(context) {
     console.log('"vscode-jxpath" is activated!');
     var decorator = new decorator_1.Decorator();
     var disposable = vscode.commands.registerCommand('extension.sayHello', function () {
-        var expression = '$..book[?(@.price==8.95)]';
+        var expression = '$.store.book[*].author';
         var activeEditor = vscode.window.activeTextEditor;
         if (activeEditor) {
             decorator.triggerUpdateDecorations(activeEditor, expression);

@@ -27,12 +27,21 @@ export function jsonpath_hightlight(obj: any, query: string, prefix: string, sur
     // prefix = prefix.replace("\"","\\");
     // surfix = prefix.replace("\"","\\");
     jp.nodes(obj, query).forEach(function (node) {
-        var index = "data"
-        node.path.forEach(function (p) {
-            if (p == "$") return
-            index += "[\"" + p + "\"]"
-        })
-        eval(index+"=prefix+node.value+surfix")
+        var index = "obj"
+        // node.path.forEach(function (p) {
+        //     if (p == "$") return
+        //     index += "[\"" + p + "\"]"
+        // })
+        let i=1
+        for(;i<node.path.length-1;i++){
+            index += "[\"" + node.path[i] + "\"]"
+        }
+        console.log(index)
+        console.log(node.path[i])
+        // delete obj["store"].book
+        console.log("delete "+index+"."+node.path[i])
+        eval("delete "+index+"."+node.path[i])
+        eval(index+"[\""+prefix+"\"]"+"=node.value")
     });
     return obj;
 }

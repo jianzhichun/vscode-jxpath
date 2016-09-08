@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
         
-        let expression = '$..book[?(@.price==8.95)]';
+        let expression = '$.store.book[*].author';
 
         let activeEditor = vscode.window.activeTextEditor;
         if(activeEditor) {
