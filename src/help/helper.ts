@@ -57,9 +57,11 @@ export function jsonpath_hightlight(obj: any, query: string, prefix: string, sur
  */
 export function xpath_hightlight(obj: any, query: string, op: Function) {
     var iterator = xp.evaluate(query, obj, null, xp.XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null)
+    var thisNode;
+    var nodeType="";
     try {
-        var thisNode = iterator.iterateNext();
-
+        thisNode = iterator.iterateNext();
+        nodeType = thisNode.nodeType;
         while (thisNode) {
             if(thisNode.nodeType === 1){
                 thisNode.tagName = op(thisNode.tagName);
@@ -71,7 +73,7 @@ export function xpath_hightlight(obj: any, query: string, op: Function) {
         }
     } catch (e) {
     }
-    return obj;
+    return [obj,nodeType];
 }
 /**
  * get the decoration via regex

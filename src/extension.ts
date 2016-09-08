@@ -9,17 +9,10 @@ import * as controler from './controler/controler'
 // your extension is activated the very first time the command is executed
 let aaa:string = "aaa";
 export function activate(context: ExtensionContext) {
-    var statusbar = window.createStatusBarItem(StatusBarAlignment.Left)
     
-    statusbar.text = `${ aaa }` || "";
-    statusbar.show() 
     var disposable = commands.registerCommand('extension.jxpath', () => {
-        var editor = window.activeTextEditor;
-        if (!editor) {
-            return; // No open text editor
-        }
-        var text = editor.document.getText();
-        controler.show_xml_afterxpath(editor,text,statusbar.text);
+        
+        controler.show_xml_afterxpath();
     });
 
     context.subscriptions.push(disposable);

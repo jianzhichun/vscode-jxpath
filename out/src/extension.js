@@ -7,16 +7,8 @@ var controler = require('./controler/controler');
 // your extension is activated the very first time the command is executed
 var aaa = "aaa";
 function activate(context) {
-    var statusbar = vscode_1.window.createStatusBarItem(vscode_1.StatusBarAlignment.Left);
-    statusbar.text = "" + aaa || "";
-    statusbar.show();
     var disposable = vscode_1.commands.registerCommand('extension.jxpath', function () {
-        var editor = vscode_1.window.activeTextEditor;
-        if (!editor) {
-            return; // No open text editor
-        }
-        var text = editor.document.getText();
-        controler.show_xml_afterxpath(editor, text, statusbar.text);
+        controler.show_xml_afterxpath();
     });
     context.subscriptions.push(disposable);
 }
