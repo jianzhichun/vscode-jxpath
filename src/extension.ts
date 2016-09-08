@@ -1,20 +1,18 @@
 'use strict';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-import { JsonPathHelper } from './help/jsonpath-helper';
-import { Decorator } from './help/decorator';
+import {ExtensionContext,commands,window,StatusBarAlignment} from 'vscode';
+import * as controler from './controler/controler'
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-
-    console.log('"vscode-jxpath" is activated!');
-
-    let decorator = new Decorator();
-
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
+let aaa:string = "aaa";
+export function activate(context: ExtensionContext) {
+    
+    var disposable = commands.registerCommand('extension.jxpath', () => {
         
+<<<<<<< HEAD
         let expression = '$.store.book[*].author';
 
         let activeEditor = vscode.window.activeTextEditor;
@@ -34,6 +32,9 @@ export function activate(context: vscode.ExtensionContext) {
                 decorator.triggerUpdateDecorations(activeEditor, expression);
             }
         }, null, context.subscriptions);
+=======
+        controler.show_xml_afterxpath();
+>>>>>>> 20ab14f58104f9e5f79d84979e07c53037d2acce
     });
 
     context.subscriptions.push(disposable);

@@ -38,3 +38,7 @@ jspm_packages
 
 # Files in out
 out
+
+# .js .js.map files
+*.js
+*.map

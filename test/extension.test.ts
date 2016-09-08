@@ -11,59 +11,21 @@ import * as assert from 'assert';
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as myExtension from '../src/extension';
+import * as helper from '../src/help/helper';
 
 // Defines a Mocha test suite to group tests of similar kind together
+
 suite("Extension Tests", () => {
     // Defines a Mocha unit test
     // test("Something 1", () => {
     //     assert.equal(-1, [1, 2, 3].indexOf(5));
     //     assert.equal(-1, [1, 2, 3].indexOf(0));
     // });
-
-    let data = `{
-  "store": {
-    "book": [ 
-      {
-        "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      }, {
-        "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      }, {
-        "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      }, {
-         "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-}`;
-
-    let dataJson = JSON.parse(data);
-
-    let dataStr = JSON.stringify(dataJson, null, 4);
-
-    for(let i = 0; i < dataStr.length; i++) {
-        if(dataStr[i] === '\n') {
-            dataStr = dataStr.replace('\n', '\\n');
-        }
-    }
-
-    console.log(dataStr);
-    
+    // var dom = require('xmldom').DOMParser
+    // var xmlSerializer = require('xmldom').XMLSerializer
+    // var xml = "<book><title><aa>Harry Potter</aa></title><title><aa>Harry Potter</aa></title></book>"
+    // var document = new dom().parseFromString(xml)
+    // xml = new xmlSerializer().serializeToString(helper.xpath_hightlight(document, "//title", function (tagName) { return "$$$" }))
+    // console.log(helper.formatXml(xml))
+    let text = vscode.window.activeTextEditor.document.getText();
 });
