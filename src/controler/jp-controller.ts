@@ -10,7 +10,6 @@ export function executeJsonpathExpression() {
         return;
     }
 
-    let text = activeEditor.document.getText();
     window.showInputBox({
         value: '',
         prompt: "Enter the " + QUERY_TYPE + " expression",
