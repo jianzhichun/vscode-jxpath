@@ -14,18 +14,10 @@ export class JsonPathHelper {
     }
 
     getMatchPositions(text: string, expression: string) {
-        // let textFormatted = this.formatText(text);
         let textJson = JSON.parse(text);
         let paths = jp.paths(textJson, expression);
         let positions = this.parsePaths(paths, text);
-        positions.forEach(position => {
-            console.log('startPos: ' + position.startPos + ', endPos: ' + position.endPos);
-        });
         return positions;
-    }
-
-    formatText(text: string): string {
-        return JSON.stringify(text, null, this.space);
     }
 
     parsePaths(paths: any, textFormatted: string) {
@@ -37,11 +29,6 @@ export class JsonPathHelper {
         for (let i = 0; i < paths.length; i++) {
             let path = paths[i];
             let expression = this.createExpressionFromPath(path);
-
-            console.log(expression);
-            console.log('LastPathItem: ' + path[path.length - 1]);
-
-
             let result = jp.query(bucketTree, expression);
             positions.push(this.parseLastPathItem(result[0], path[path.length - 1], textFormatted));
         }
@@ -91,29 +78,17 @@ export class JsonPathHelper {
                         return { startPos: child.node.leftPos, endPos: child.node.rightPos + 1 };
                     }
                 }
-                // no match in children
-                // ???
-
-                console.log('=>STRING=>no match in children');
-                
 
                 let leftPos = resultExcludeLastPathItem.node.leftPos;
                 let rightPos = resultExcludeLastPathItem.node.rightPos;
                 let objStr = textFormatted.slice(leftPos, rightPos + 1);
 
-                console.log(objStr.length);
-                
-
                 let indexs = [];
                 let i = -1;
-
-                console.log(lastPathItem);
-                console.log('"' + lastPathItem + '": ');
-
                 while ((i = objStr.indexOf('"' + lastPathItem + '": ', i + 1)) >= 0) {
                     indexs.push(i);
                 }
- 
+
                 indexs = indexs.filter(index => {
                     let leftCnt = 0;
                     let rightCnt = 0;

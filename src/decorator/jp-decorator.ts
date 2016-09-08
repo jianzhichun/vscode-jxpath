@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
-import { JsonPathHelper, Bracket } from './jsonpath-helper';
+import { JsonPathHelper } from '../helper/jsonpath-helper';
 
 export class Decorator {
-
     timeout: any = null;
 
     private matchTextDecorationType = vscode.window.createTextEditorDecorationType({
@@ -11,12 +10,10 @@ export class Decorator {
         overviewRulerColor: 'blue',
         overviewRulerLane: vscode.OverviewRulerLane.Right,
         light: {
-            // backgroundColor: 'red'
             borderColor: 'red'
         },
         dark: {
             borderColor: 'yellow'
-            // backgroundColor: 'yellow'
         }
     });
 
@@ -33,35 +30,9 @@ export class Decorator {
         }
 
         let text = activeEditor.document.getText();
-
         let jsonPathHelper = new JsonPathHelper();
         let decorations: vscode.DecorationOptions[] = [];
-
-        // TEST CASES
-        // $.store.book[*].author ok
-        // $..author ok
-        // $.store.* ok
-        // $.store..price ok
-        // $..book[2] ok
-        // $..book[(@.length-1)] ok
-        // $..book[-1:] ok
-        // $..book[0,1] ok
-        // $..book[:2] ok
-        // $..* ok
-        // $..book[?(@.price<10)] ok
-        // $..book[?(@.isbn)] ok
-        // $..book[?(@.price==8.95)] ok
-        // $..book[?(@.price<30 && @.category=="fiction")] ok
-
-        // $.store.book[*].price[0] ok
-        // $.store.book[*].price[1] ok
-        // $.store.book[*].price[2] ok
-        // $.store.book[*].price[3] ok
-        // $.store.book[*].price ok
-        // $.store.book[*].category ok
-
-
-        let positions = jsonPathHelper.getMatchPositions(text, '$.store.book[*].price');
+        let positions = jsonPathHelper.getMatchPositions(text, expression);
 
         for (let i = 0; i < positions.length; i++) {
             let startPos = activeEditor.document.positionAt(positions[i].startPos);
