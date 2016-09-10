@@ -16,7 +16,7 @@
     "main": "./out/src/extension",
     "contributes": {
         "keybindings": [{
-            "command": "extension.jxpath",
+            "command": "extension.jsonpath",
             "key": "alt+j",
             "when": "editorTextFocus"
         }]

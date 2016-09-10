@@ -1,62 +1,83 @@
 import * as vscode from 'vscode';
 import { JsonPathHelper, Position } from '../helper/jsonpath-helper';
 
+export let matchTextDecorationType = vscode.window.createTextEditorDecorationType({
+    borderWidth: '1px',
+    borderStyle: 'dashed',
+    overviewRulerColor: 'blue',
+    overviewRulerLane: vscode.OverviewRulerLane.Right,
+    light: {
+        borderColor: 'red'
+    },
+    dark: {
+        borderColor: 'yellow'
+    }
+});
+
 export class Decorator {
-    timeout: any = null;
+    // timeout: any = null;
 
-    private matchTextDecorationType = vscode.window.createTextEditorDecorationType({
-        borderWidth: '1px',
-        borderStyle: 'dashed',
-        overviewRulerColor: 'blue',
-        overviewRulerLane: vscode.OverviewRulerLane.Right,
-        light: {
-            borderColor: 'red'
-        },
-        dark: {
-            borderColor: 'yellow'
-        }
-    });
+    // public triggerUpdateDecorations(activeEditor: vscode.TextEditor, expression: string) {
+    //     if(!expression) {
+    //         return;
+    //     }
 
-    private cancelHighlightDecorationType = vscode.window.createTextEditorDecorationType({
-        borderWidth: '1px',
-    });
+    //     if (this.timeout) {
+    //         clearTimeout(this.timeout);
+    //     }
+    //     this.timeout = setTimeout(this.updateDecorations(activeEditor, expression), 500);
+    // }
+    private _statusBarItem: vscode.StatusBarItem;
 
-    public triggerUpdateDecorations(activeEditor: vscode.TextEditor, expression: string) {
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-        }
-        this.timeout = setTimeout(this.updateDecorations(activeEditor, expression), 500);
+    constructor(_statusBarItem: vscode.StatusBarItem) {
+        this._statusBarItem = _statusBarItem;
     }
 
-    public cancelHighlight(activeEditor: vscode.TextEditor) {
-        if (!activeEditor) {
-            return;
-        }
-        let text = activeEditor.document.getText();
-        activeEditor.edit(function (editBuilder: vscode.TextEditorEdit) {
-            let startPos = activeEditor.document.positionAt(0);
-            let endPos = activeEditor.document.positionAt(text.length - 1);
-            editBuilder.replace(new vscode.Range(startPos, endPos), text);
-        })
-        // let textLen = activeEditor.document.getText().length;
-        // let startPos = activeEditor.document.positionAt(0);
-        // let endPos = activeEditor.document.positionAt(textLen - 1);
-        // let decoration: vscode.DecorationOptions[] = [{ range: new vscode.Range(startPos, endPos), hoverMessage: '' }];
-        // activeEditor.setDecorations(this.cancelHighlightDecorationType, decoration);
+    private showNoResultInfoInStatusBarItem(message: string) {
+        let statusBarItem = this._statusBarItem;
+        statusBarItem.text = message;
+        statusBarItem.show();
     }
 
-    private updateDecorations(activeEditor: vscode.TextEditor, expression: string) {
-        if (!activeEditor) {
+    public updateDecorations(activeEditor: vscode.TextEditor, expression: string) {
+        if (!expression) {
+            this.showNoResultInfoInStatusBarItem(`No result found for expression: ${expression}`);
             return;
         }
-        if(!expression) {
+
+        if (!activeEditor) {
             return;
         }
 
         let text = activeEditor.document.getText();
+        let textJson; 
+        try {
+            textJson = JSON.parse(text);
+        } catch (error) {
+            this.showNoResultInfoInStatusBarItem(`Invalid json file.`);
+            return;
+        }
+
         let jsonPathHelper = new JsonPathHelper();
         let decorations: vscode.DecorationOptions[] = [];
-        let positions = jsonPathHelper.getMatchPositions(text, expression);
+
+        let positions;
+
+        try {
+            positions = jsonPathHelper.getMatchPositions(text, textJson, expression);
+        } catch (error) {
+             this.showNoResultInfoInStatusBarItem(`Invalid expression: ${expression}`);
+             return;
+        }
+
+        if (!positions || positions.length === 0) {
+            this.showNoResultInfoInStatusBarItem(`No result found for expression: ${expression}`);
+            return;
+        }
+
+        if (!positions || positions.length == 0) {
+            return;
+        }
 
         for (let i = 0; i < positions.length; i++) {
             let startPos = activeEditor.document.positionAt(positions[i].startPos);
@@ -65,6 +86,8 @@ export class Decorator {
             decorations.push(decoration);
         }
 
-        activeEditor.setDecorations(this.matchTextDecorationType, decorations);
+        activeEditor.setDecorations(matchTextDecorationType, decorations);
+
+        this.showNoResultInfoInStatusBarItem(`Found result of expression: ${expression}`);
     }
 }

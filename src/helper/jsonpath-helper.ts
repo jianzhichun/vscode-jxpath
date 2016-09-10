@@ -1,21 +1,21 @@
+import * as vscode from 'vscode';
+
 let jp = require('jsonpath');
 
 export class JsonPathHelper {
 
-    private DEFAULT_SPACE: number = 4;
-    private space: number;
-
-    constructor(space?: number) {
-        if (space) {
-            this.space = space;
-        } else {
-            this.space = this.DEFAULT_SPACE;
+    getMatchPositions(text: string, textJson: any, expression: string) {
+        let paths;
+        try {
+            paths = jp.paths(textJson, expression);
+        } catch (error) {
+            throw 'Invalid expression';
         }
-    }
 
-    getMatchPositions(text: string, expression: string) {
-        let textJson = JSON.parse(text);
-        let paths = jp.paths(textJson, expression);
+        if(!paths || paths.length === 0) {
+            return [];
+        }
+
         let positions = this.parsePaths(paths, text);
         return positions;
     }

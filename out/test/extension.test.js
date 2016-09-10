@@ -3,10 +3,6 @@
 // Please refer to their documentation on https://mochajs.org/ for help.
 //
 "use strict";
-// import * as helper from '../src/help/helper';
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-var vscode = require('vscode');
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", function () {
     // Defines a Mocha unit test
@@ -20,6 +16,6 @@ suite("Extension Tests", function () {
     // var document = new dom().parseFromString(xml)
     // xml = new xmlSerializer().serializeToString(helper.xpath_hightlight(document, "//title", function (tagName) { return "$$$" }))
     // console.log(helper.formatXml(xml))
-    var text = vscode.window.activeTextEditor.document.getText();
+    // let text = vscode.window.activeTextEditor.document.getText();
 });
 //# sourceMappingURL=extension.test.js.map

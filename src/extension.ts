@@ -1,17 +1,28 @@
 'use strict';
 
-import { ExtensionContext, commands } from 'vscode';
+import { ExtensionContext, commands, StatusBarItem, window, StatusBarAlignment } from 'vscode';
 import * as jpController from './controler/jp-controller';
 
+
 export function activate(context: ExtensionContext) {
-    
-    let disposable = commands.registerCommand('extension.jxpath', () => {
-        jpController.executeJsonpathExpression();
+
+    let _statusBarItem: StatusBarItem;
+
+    let executeJsonpath = commands.registerCommand('extension.jsonpath', () => {
+        if (!this._statusBarItem) {
+            this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
+            context.subscriptions.push(_statusBarItem);
+        }
+        this._statusBarItem.text = "";
+        this._statusBarItem.show();
+
+        jpController.executeJsonpathExpression(context, this._statusBarItem);
     });
 
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(executeJsonpath);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
+
 }

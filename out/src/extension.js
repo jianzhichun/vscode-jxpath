@@ -2,10 +2,18 @@
 var vscode_1 = require('vscode');
 var jpController = require('./controler/jp-controller');
 function activate(context) {
-    var disposable = vscode_1.commands.registerCommand('extension.jxpath', function () {
-        jpController.executeJsonpathExpression();
+    var _this = this;
+    var _statusBarItem;
+    var executeJsonpath = vscode_1.commands.registerCommand('extension.jsonpath', function () {
+        if (!_this._statusBarItem) {
+            _this._statusBarItem = vscode_1.window.createStatusBarItem(vscode_1.StatusBarAlignment.Left);
+            context.subscriptions.push(_statusBarItem);
+        }
+        _this._statusBarItem.text = "";
+        _this._statusBarItem.show();
+        jpController.executeJsonpathExpression(context, _this._statusBarItem);
     });
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(executeJsonpath);
 }
 exports.activate = activate;
 // this method is called when your extension is deactivated
