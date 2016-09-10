@@ -19,7 +19,14 @@
             "command": "extension.jsonpath",
             "key": "alt+j",
             "when": "editorTextFocus"
-        }]
+        }], 
+        "commands": [{
+			"command": "extension.openjsonpath",
+			"title": "Open Jsonpath Search"
+		}, {
+			"command": "extension.closejsonpath",
+			"title": "Close Jsonpath Search"
+		}]
     },
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",

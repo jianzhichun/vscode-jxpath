@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { JsonPathHelper, Position } from '../helper/jsonpath-helper';
+import { isJsonpathOpen } from '../extension';
 
 export let matchTextDecorationType = vscode.window.createTextEditorDecorationType({
     borderWidth: '1px',
@@ -40,6 +41,10 @@ export class Decorator {
     }
 
     public updateDecorations(activeEditor: vscode.TextEditor, expression: string) {
+        if(!isJsonpathOpen) {
+            return;
+        }
+
         if (!expression) {
             this.showNoResultInfoInStatusBarItem(`No result found for expression: ${expression}`);
             return;
