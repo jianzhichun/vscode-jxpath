@@ -292,7 +292,7 @@ export class JsonPathHelper {
 
 }
 
-interface Position {
+export interface Position {
     startPos: number;
     endPos: number;
 }

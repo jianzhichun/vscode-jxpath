@@ -1,7 +1,7 @@
 import { TextEditor, Range, DecorationOptions, window }  from 'vscode';
 import { Decorator } from '../decorator/jp-decorator'
 
-let QUERY_TYPE = 'JsonPath';
+let QUERY_TYPE = 'jsonpath';
 let expression = '';
 
 export function executeJsonpathExpression() {
@@ -16,6 +16,7 @@ export function executeJsonpathExpression() {
         placeHolder: `${"" === expression ? "Example: $.store.book[*].author" : expression}`
     }).then(_expression => {
         let decorator = new Decorator();
+        decorator.cancelHighlight(activeEditor);
         decorator.triggerUpdateDecorations(activeEditor, _expression);
         expression = _expression;
     })

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { JsonPathHelper } from '../helper/jsonpath-helper';
+import { JsonPathHelper, Position } from '../helper/jsonpath-helper';
 
 export class Decorator {
     timeout: any = null;
@@ -17,6 +17,10 @@ export class Decorator {
         }
     });
 
+    private cancelHighlightDecorationType = vscode.window.createTextEditorDecorationType({
+        borderWidth: '1px',
+    });
+
     public triggerUpdateDecorations(activeEditor: vscode.TextEditor, expression: string) {
         if (this.timeout) {
             clearTimeout(this.timeout);
@@ -24,8 +28,28 @@ export class Decorator {
         this.timeout = setTimeout(this.updateDecorations(activeEditor, expression), 500);
     }
 
+    public cancelHighlight(activeEditor: vscode.TextEditor) {
+        if (!activeEditor) {
+            return;
+        }
+        let text = activeEditor.document.getText();
+        activeEditor.edit(function (editBuilder: vscode.TextEditorEdit) {
+            let startPos = activeEditor.document.positionAt(0);
+            let endPos = activeEditor.document.positionAt(text.length - 1);
+            editBuilder.replace(new vscode.Range(startPos, endPos), text);
+        })
+        // let textLen = activeEditor.document.getText().length;
+        // let startPos = activeEditor.document.positionAt(0);
+        // let endPos = activeEditor.document.positionAt(textLen - 1);
+        // let decoration: vscode.DecorationOptions[] = [{ range: new vscode.Range(startPos, endPos), hoverMessage: '' }];
+        // activeEditor.setDecorations(this.cancelHighlightDecorationType, decoration);
+    }
+
     private updateDecorations(activeEditor: vscode.TextEditor, expression: string) {
         if (!activeEditor) {
+            return;
+        }
+        if(!expression) {
             return;
         }
 
