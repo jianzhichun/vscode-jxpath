@@ -12,6 +12,7 @@
     "engines": {
         "vscode": "^1.0.0"
     },
+    "icon": "img/j.jpg",
     "categories": [
         "Other"
     ],

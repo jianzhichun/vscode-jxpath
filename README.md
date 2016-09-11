@@ -1,8 +1,8 @@
 # vscode-jxpath
 
-[![Current Version](http://vsmarketplacebadge.apphb.com/version/chun.vscode-translate.svg)](https://marketplace.visualstudio.com/items?itemName=chun.vscode-translate)
-[![Install Count](http://vsmarketplacebadge.apphb.com/installs/chun.vscode-translate.svg)](https://marketplace.visualstudio.com/items?itemName=chun.vscode-translate)
-[![Open Issues](http://vsmarketplacebadge.apphb.com/rating/chun.vscode-translate.svg)](https://marketplace.visualstudio.com/items?itemName=chun.vscode-translate)
+[![Current Version](http://vsmarketplacebadge.apphb.com/version/joseph-chun.vscode-jxpath.svg)](https://marketplace.visualstudio.com/items?itemName=joseph-chun.vscode-jxpath)
+[![Install Count](http://vsmarketplacebadge.apphb.com/installs/joseph-chun.vscode-jxpath.svg)](https://marketplace.visualstudio.com/items?itemName=joseph-chun.vscode-jxpath)
+[![Open Issues](http://vsmarketplacebadge.apphb.com/rating/joseph-chun.vscode-jxpath.svg)](https://marketplace.visualstudio.com/items?itemName=joseph-chun.vscode-jxpath)
 
 ## search json via jsonpath query and highlight the result of jsonpath 
 <br />
