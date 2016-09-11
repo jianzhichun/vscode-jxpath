@@ -9,8 +9,7 @@ press ALT+j to input jsonpath query for searching json<br />
 
 ### It looks like:
 
-![](https://raw.githubusercontent.com/jianzhichun/vscode-jxpath/master/img/jxpath_show1.gif)
-![](https://raw.githubusercontent.com/jianzhichun/vscode-jxpath/master/img/jxpath_show2.gif)
+![](https://raw.githubusercontent.com/jianzhichun/vscode-jxpath/master/img/jsonpath.gif)
 
 
 ## Contribution.
