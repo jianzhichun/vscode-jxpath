@@ -45,21 +45,21 @@ export class Decorator {
             return;
         }
 
-        if (!expression) {
-            this.showNoResultInfoInStatusBarItem(`No result found for expression: ${expression}`);
-            return;
-        }
-
-        if (!activeEditor) {
-            return;
-        }
-
         let text = activeEditor.document.getText();
         let textJson; 
         try {
             textJson = JSON.parse(text);
         } catch (error) {
             this.showNoResultInfoInStatusBarItem(`Invalid json file.`);
+            return;
+        }
+
+        if (!expression) {
+            this.showNoResultInfoInStatusBarItem(`No result found for expression: ${expression}`);
+            return;
+        }
+
+        if (!activeEditor) {
             return;
         }
 
