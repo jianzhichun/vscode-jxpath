@@ -3,7 +3,12 @@
     "displayName": "JXpath",
     "description": "",
     "version": "0.0.1",
-    "publisher": "Joseph-chun",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jianzhichun/vscode-jxpath.git"
+    },
+    "publisher": "joseph-chun",
     "engines": {
         "vscode": "^1.0.0"
     },
@@ -19,14 +24,14 @@
             "command": "extension.jsonpath",
             "key": "alt+j",
             "when": "editorTextFocus"
-        }], 
+        }],
         "commands": [{
-			"command": "extension.openjsonpath",
-			"title": "Open Jsonpath Search"
-		}, {
-			"command": "extension.closejsonpath",
-			"title": "Close Jsonpath Search"
-		}]
+            "command": "extension.openjsonpath",
+            "title": "Open Jsonpath Search"
+        }, {
+            "command": "extension.closejsonpath",
+            "title": "Close Jsonpath Search"
+        }]
     },
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
